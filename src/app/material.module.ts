@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import {
     MatButtonModule, MatIconModule, MatInputModule,
     MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,
-    MatCheckboxModule, MatSidenavModule, MatToolbarModule
+    MatCheckboxModule, MatSidenavModule, MatToolbarModule,
+    MatListModule
 } from '@angular/material';
 
 const types = [MatButtonModule, MatIconModule, MatInputModule,
     MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,
-    MatCheckboxModule, MatSidenavModule, MatToolbarModule
+    MatCheckboxModule, MatSidenavModule, MatToolbarModule,
+    MatListModule
 ];
 
 @NgModule({
