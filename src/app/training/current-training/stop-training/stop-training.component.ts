@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  progress: number;
+}
 
 @Component({
   selector: 'app-stop-training',
@@ -9,9 +13,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class StopTrainingComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<StopTrainingComponent>) { }
+    public dialogRef: MatDialogRef<StopTrainingComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: DialogData) { }
 
   ngOnInit() {
   }
-
 }
