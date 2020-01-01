@@ -4,7 +4,8 @@ import {
   MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,
   MatCheckboxModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTabsModule, MatCardModule,
-  MatSelectModule, MatProgressSpinnerModule, MatDialogModule, MatTableModule
+  MatSelectModule, MatProgressSpinnerModule, MatDialogModule,
+  MatTableModule, MatSortModule
 } from '@angular/material';
 
 const types = [MatButtonModule, MatIconModule, MatInputModule,
@@ -12,7 +13,7 @@ const types = [MatButtonModule, MatIconModule, MatInputModule,
   MatCheckboxModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTabsModule, MatCardModule,
   MatSelectModule, MatProgressSpinnerModule, MatDialogModule,
-  MatTableModule
+  MatTableModule, MatSortModule
 ];
 
 @NgModule({
