@@ -1,7 +1,7 @@
 export interface Exercise {
   id: string;
   name: string;
-  // in seconds
+  /** in seconds */
   duration: number;
   calories: number;
   date?: Date;
