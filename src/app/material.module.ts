@@ -4,14 +4,14 @@ import {
     MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,
     MatCheckboxModule, MatSidenavModule, MatToolbarModule,
     MatListModule, MatTabsModule, MatCardModule,
-    MatSelectModule, MatProgressSpinnerModule
+    MatSelectModule, MatProgressSpinnerModule, MatDialogModule
 } from '@angular/material';
 
 const types = [MatButtonModule, MatIconModule, MatInputModule,
     MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,
     MatCheckboxModule, MatSidenavModule, MatToolbarModule,
     MatListModule, MatTabsModule, MatCardModule,
-    MatSelectModule, MatProgressSpinnerModule
+    MatSelectModule, MatProgressSpinnerModule, MatDialogModule
 ];
 
 @NgModule({
