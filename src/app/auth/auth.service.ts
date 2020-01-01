@@ -9,7 +9,7 @@ export class AuthService {
   // true - authenticated
   authChange = new Subject<boolean>();
 
-  private user: User;
+  private user: User = null;
 
   constructor(private router: Router) {
 
