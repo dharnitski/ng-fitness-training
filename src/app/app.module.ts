@@ -19,6 +19,7 @@ import { CurrentTrainingComponent } from './training/current-training/current-tr
 import { StopTrainingComponent } from './training/current-training/stop-training/stop-training.component';
 import { MatDialogModule } from '@angular/material';
 import { AuthService } from './auth/auth.service';
+import { TrainingService } from './training/training.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,10 @@ import { AuthService } from './auth/auth.service';
     // dynamic component exception for Material Components
     MatDialogModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    TrainingService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
 })
