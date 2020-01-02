@@ -5,6 +5,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Exercise, ExerciseValues } from './exercise.model';
 
+const AVAILABLE_EXERCISES_COLLECTION = 'availableExercises';
+const FINISHED_EXERCISES_COLLECTION = 'finishedExercises';
+
 @Injectable()
 export class TrainingService {
   private availableExercises: Exercise[] = [];
@@ -22,7 +25,7 @@ export class TrainingService {
 
   fetchAvailableExercises() {
     this.db
-      .collection('availableExercises')
+      .collection(AVAILABLE_EXERCISES_COLLECTION)
       .snapshotChanges().pipe(
         map(docArray => {
           return docArray.map(doc => {
@@ -39,6 +42,7 @@ export class TrainingService {
   }
 
   startExercise(selectedId: string) {
+    this.db.doc(AVAILABLE_EXERCISES_COLLECTION + '/' + selectedId).update({ lastSelected: new Date() });
     this.runningExercise = this.availableExercises.find(ex => ex.id === selectedId);
     this.exerciseChanged.next({ ...this.runningExercise });
   }
@@ -74,7 +78,7 @@ export class TrainingService {
   }
 
   fetchCompletedOrCanceledExercises() {
-    this.db.collection('finishedExercises')
+    this.db.collection(FINISHED_EXERCISES_COLLECTION)
       .valueChanges()
       .subscribe((exercises: Exercise[]) => {
         this.finishedExercisesChanged.next(exercises);
@@ -83,6 +87,6 @@ export class TrainingService {
 
   private addDataToDatabase(exercise: Exercise) {
     // todo: handle errors
-    this.db.collection('finishedExercises').add(exercise);
+    this.db.collection(FINISHED_EXERCISES_COLLECTION).add(exercise);
   }
 }
