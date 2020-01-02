@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import { AuthData } from './auth-data.model';
 import { TrainingService } from '../training/training.service';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,8 @@ export class AuthService {
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth,
-    private trainingService: TrainingService) { }
+    private trainingService: TrainingService,
+    private snackBar: MatSnackBar) { }
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
@@ -44,8 +46,8 @@ export class AuthService {
         authData.password
       ).then(result => {
         // this.authSuccessfully();
-      }).catch(e => {
-        console.error(e);
+      }).catch(error => {
+        this.snackBar.open(error.message, null, { duration: 3000 });
       });
   }
 
@@ -56,8 +58,8 @@ export class AuthService {
         authData.password,
       ).then(result => {
         // this.authSuccessfully();
-      }).catch(e => {
-        console.error(e);
+      }).catch(error => {
+        this.snackBar.open(error.message, null, { duration: 3000 });
       });
   }
 
