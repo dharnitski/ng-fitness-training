@@ -11,13 +11,14 @@ export class AuthService {
   // true - authenticated
   authChange = new Subject<boolean>();
 
-  private user: User = null;
+  private isAuthenticated = false;
 
   constructor(
     private router: Router,
     private afAuth: AngularFireAuth) { }
 
   private authSuccessfully() {
+    this.isAuthenticated = true;
     this.authChange.next(true);
     this.router.navigate(['/training']);
   }
@@ -47,15 +48,15 @@ export class AuthService {
   }
 
   logout() {
+    // save state
+    this.isAuthenticated = false;
+    // notify app
     this.authChange.next(false);
+    // redirect user
     this.router.navigate(['/login']);
   }
 
-  getUser() {
-    return { ...this.user };
-  }
-
   isAuth() {
-    return this.user !== null;
+    return this.isAuthenticated;
   }
 }
