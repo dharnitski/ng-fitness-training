@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Exercise, ExerciseValues } from './exercise.model';
+import { UIService } from '../shared/ui.service';
 
 const AVAILABLE_EXERCISES_COLLECTION = 'availableExercises';
 const FINISHED_EXERCISES_COLLECTION = 'finishedExercises';
@@ -24,7 +25,8 @@ export class TrainingService {
 
 
   constructor(
-    private db: AngularFirestore) { }
+    private db: AngularFirestore,
+    private uiService: UIService) { }
 
 
   fetchAvailableExercises() {
@@ -43,6 +45,7 @@ export class TrainingService {
           this.availableExercises = exercises;
           this.exercisesChanged.next([...exercises]);
         }, error => {
+          this.uiService.showSnackbar('Fetching Exercises failed, please try again later', null, 3000);
           console.error(error);
         })
     );
