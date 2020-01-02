@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material';
 
@@ -38,7 +37,6 @@ import { TrainingModule } from './training/training.module';
     // dynamic component exception for Material Components
     MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
     AuthModule,
     TrainingModule
   ],
