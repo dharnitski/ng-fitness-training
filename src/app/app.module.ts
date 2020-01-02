@@ -10,8 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
+import { AuthModule } from './auth/auth.module'
 import { TrainingComponent } from './training/training.component';
 import { NewTrainingComponent } from './training/new-training/new-training.component';
 import { PastTrainingsComponent } from './training/past-trainings/past-trainings.component';
@@ -24,14 +23,13 @@ import { MatDialogModule } from '@angular/material';
 import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 
-import {firebaseConfig} from './firebase';
+import { firebaseConfig } from './firebase';
 import { UIService } from './shared/ui.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
+
     TrainingComponent,
     NewTrainingComponent,
     PastTrainingsComponent,
@@ -52,7 +50,8 @@ import { UIService } from './shared/ui.service';
     MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AuthModule
   ],
   providers: [
     AuthService,
