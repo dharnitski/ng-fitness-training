@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() sidenavToggle = new EventEmitter<void>();
   isAuth: boolean;
-  authSubscription: Subscription;
+  private authSubscription: Subscription;
 
   constructor(private authService: AuthService) { }
 
