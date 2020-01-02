@@ -5,7 +5,7 @@ import {
   MatCheckboxModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTabsModule, MatCardModule,
   MatSelectModule, MatProgressSpinnerModule, MatDialogModule,
-  MatTableModule, MatSortModule
+  MatTableModule, MatSortModule, MatPaginatorModule
 } from '@angular/material';
 
 const types = [MatButtonModule, MatIconModule, MatInputModule,
@@ -13,7 +13,7 @@ const types = [MatButtonModule, MatIconModule, MatInputModule,
   MatCheckboxModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatTabsModule, MatCardModule,
   MatSelectModule, MatProgressSpinnerModule, MatDialogModule,
-  MatTableModule, MatSortModule
+  MatTableModule, MatSortModule, MatPaginatorModule
 ];
 
 @NgModule({
