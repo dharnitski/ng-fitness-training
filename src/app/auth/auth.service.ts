@@ -1,8 +1,10 @@
-import { User } from './user.model';
-import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+import { User } from './user.model';
+import { AuthData } from './auth-data.model';
 
 @Injectable()
 export class AuthService {
@@ -11,40 +13,42 @@ export class AuthService {
 
   private user: User = null;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private afAuth: AngularFireAuth) { }
 
-  }
-
-  // saves user state
-  // emits auth change event
-  // navigates to routing link
-  private setUser(user: User) {
-    this.user = user;
-    const isAuth = user !== null;
-    this.authChange.next(isAuth);
-    if (isAuth) {
-      this.router.navigate(['/training']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+  private authSuccessfully() {
+    this.authChange.next(true);
+    this.router.navigate(['/training']);
   }
 
   registerUser(authData: AuthData) {
-    this.setUser({
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString()
-    });
+    this.afAuth.auth
+      .createUserWithEmailAndPassword(
+        authData.email,
+        authData.password
+      ).then(result => {
+        this.authSuccessfully();
+      }).catch(e => {
+        console.error(e);
+      });
   }
 
   login(authData: AuthData) {
-    this.setUser({
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString()
-    });
+    this.afAuth.auth
+      .signInWithEmailAndPassword(
+        authData.email,
+        authData.password,
+      ).then(result => {
+        this.authSuccessfully();
+      }).catch(e => {
+        console.error(e);
+      });
   }
 
   logout() {
-    this.setUser(null);
+    this.authChange.next(false);
+    this.router.navigate(['/login']);
   }
 
   getUser() {

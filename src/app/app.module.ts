@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -49,7 +50,8 @@ import {firebaseConfig} from './firebase';
     // dynamic component exception for Material Components
     MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     AuthService,
