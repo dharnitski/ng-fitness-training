@@ -23,7 +23,8 @@ export class TrainingService {
   private fbSubs: Subscription[] = [];
 
 
-  constructor(private db: AngularFirestore) { }
+  constructor(
+    private db: AngularFirestore) { }
 
 
   fetchAvailableExercises() {

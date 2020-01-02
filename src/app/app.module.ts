@@ -25,6 +25,7 @@ import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 
 import {firebaseConfig} from './firebase';
+import { UIService } from './shared/ui.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {firebaseConfig} from './firebase';
   ],
   providers: [
     AuthService,
-    TrainingService
+    TrainingService,
+    UIService
   ],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingComponent]
