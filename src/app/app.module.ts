@@ -17,7 +17,7 @@ import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
 import { firebaseConfig } from './firebase';
 import { UIService } from './shared/ui.service';
-import { TrainingModule } from './training/training.module';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -37,8 +37,8 @@ import { TrainingModule } from './training/training.module';
     // dynamic component exception for Material Components
     MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
     AuthModule,
-    TrainingModule
   ],
   providers: [
     AuthService,
