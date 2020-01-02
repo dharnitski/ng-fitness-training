@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +22,8 @@ import { StopTrainingComponent } from './training/current-training/stop-training
 import { MatDialogModule } from '@angular/material';
 import { AuthService } from './auth/auth.service';
 import { TrainingService } from './training/training.service';
+
+import {firebaseConfig} from './firebase';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,9 @@ import { TrainingService } from './training/training.service';
     FlexLayoutModule,
     FormsModule,
     // dynamic component exception for Material Components
-    MatDialogModule
+    MatDialogModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [
     AuthService,
