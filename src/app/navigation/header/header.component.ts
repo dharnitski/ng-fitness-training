@@ -5,9 +5,6 @@ import { Observable } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 import { AuthService } from '../../auth/auth.service';
 
-
-
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
@@ -15,21 +15,12 @@ const FINISHED_EXERCISES_COLLECTION = 'finishedExercises';
 
 @Injectable()
 export class TrainingService {
-  /** current training */
-  exerciseChanged = new Subject<Exercise>();
-  /** available trainings */
-  exercisesChanged = new Subject<Exercise[]>();
-  /** cancelled and completed exercises */
-  finishedExercisesChanged = new Subject<Exercise[]>();
-
   private fbSubs: Subscription[] = [];
-
 
   constructor(
     private db: AngularFirestore,
     private uiService: UIService,
     private store: Store<fromTraining.State>) { }
-
 
   fetchAvailableExercises() {
     this.store.dispatch(new UI.StartLoading());
