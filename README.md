@@ -30,3 +30,11 @@ You can find actual settings in Firebase settings for your app
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Deploy to Firebase
+
+```shell
+sudo npm install -g firebase-tools
+ng build --prod
+firebase deploy
+```
