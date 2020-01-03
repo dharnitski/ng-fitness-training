@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
-import * as fromApp from '../../app.reducer';
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +16,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private store: Store<{ ui: fromApp.State }>) { }
+    private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
   }
 
   onSubmit(form: NgForm) {
