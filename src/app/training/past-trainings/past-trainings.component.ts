@@ -1,31 +1,32 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { Exercise } from '../exercise.model';
 import { TrainingService } from '../training.service';
+import * as fromTraining from '../training.reducer';
 
 @Component({
   selector: 'app-past-trainings',
   templateUrl: './past-trainings.component.html',
   styleUrls: ['./past-trainings.component.css']
 })
-export class PastTrainingsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PastTrainingsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['date', 'name', 'duration', 'calories', 'state'];
   dataSource = new MatTableDataSource<Exercise>();
 
-  private exChangedSubscription: Subscription;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private trainingService: TrainingService) { }
+  constructor(
+    private trainingService: TrainingService,
+    private store: Store<fromTraining.TrainingState>) { }
 
   ngOnInit() {
-    this.exChangedSubscription = this.trainingService.finishedExercisesChanged
-      .subscribe((exercises: Exercise[]) => {
-        this.dataSource.data = exercises;
-      });
+    this.store.select(fromTraining.getFinishedExercises).subscribe(exercises => {
+      this.dataSource.data = exercises;
+    });
     this.trainingService.fetchCompletedOrCanceledExercises();
   }
 
@@ -36,12 +37,6 @@ export class PastTrainingsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  ngOnDestroy(): void {
-    if (this.exChangedSubscription) {
-      this.exChangedSubscription.unsubscribe();
-    }
   }
 
 }
