@@ -7,7 +7,7 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   ui: fromUI.uiReducer
-}
+};
 
 export const getUIState = createFeatureSelector<fromUI.State>('ui');
 export const getIsLoading = createSelector(getUIState, fromUI.getIsLoading);
