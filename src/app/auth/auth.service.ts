@@ -6,9 +6,9 @@ import { Store } from '@ngrx/store';
 import { TrainingService } from '../training/training.service';
 import { UIService } from '../shared/ui.service';
 import * as fromRoot from '../app.reducer';
-import * as UI from '../shared/ui.actions';
 import { AuthData } from './auth-data.model';
 import { setAuthenticated, setUnauthenticated } from '../auth/auth.actions';
+import { startLoading, stopLoading } from '../shared/ui.actions';
 
 @Injectable()
 export class AuthService {
@@ -36,29 +36,29 @@ export class AuthService {
   }
 
   registerUser(authData: AuthData) {
-    this.store.dispatch(new UI.StartLoading());
+    this.store.dispatch(startLoading());
     this.afAuth.auth
       .createUserWithEmailAndPassword(
         authData.email,
         authData.password
       ).then(result => {
-        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(stopLoading());
       }).catch(error => {
-        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(stopLoading());
         this.uiService.showSnackbar(error.message, null, 3000);
       });
   }
 
   login(authData: AuthData) {
-    this.store.dispatch(new UI.StartLoading());
+    this.store.dispatch(startLoading());
     this.afAuth.auth
       .signInWithEmailAndPassword(
         authData.email,
         authData.password,
       ).then(result => {
-        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(stopLoading());
       }).catch(error => {
-        this.store.dispatch(new UI.StopLoading());
+        this.store.dispatch(stopLoading());
         this.uiService.showSnackbar(error.message, null, 3000);
       });
   }

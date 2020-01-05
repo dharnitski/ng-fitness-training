@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 import { Exercise, ExerciseValues } from './exercise.model';
 import { UIService } from '../shared/ui.service';
 import * as fromTraining from './training.reducer';
-import * as UI from '../shared/ui.actions';
 import * as Training from './training.actions';
+import { startLoading, stopLoading } from '../shared/ui.actions';
 
 const AVAILABLE_EXERCISES_COLLECTION = 'availableExercises';
 const FINISHED_EXERCISES_COLLECTION = 'finishedExercises';
@@ -23,7 +23,7 @@ export class TrainingService {
     private store: Store<fromTraining.State>) { }
 
   fetchAvailableExercises() {
-    this.store.dispatch(new UI.StartLoading());
+    this.store.dispatch(startLoading());
     this.fbSubs.push(
       this.db.collection(AVAILABLE_EXERCISES_COLLECTION)
         .snapshotChanges().pipe(
@@ -37,10 +37,10 @@ export class TrainingService {
           // subscription managed by framework, no need to unsubscribe
         ).subscribe((exercises: Exercise[]) => {
           this.store.dispatch(new Training.SetAvailableTrainings(exercises));
-          this.store.dispatch(new UI.StopLoading());
+          this.store.dispatch(stopLoading());
         }, error => {
           this.uiService.showSnackbar('Fetching Exercises failed, please try again later', null, 3000);
-          this.store.dispatch(new UI.StopLoading());
+          this.store.dispatch(stopLoading());
           console.error(error);
         })
     );
