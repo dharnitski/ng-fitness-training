@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 import { Exercise, ExerciseValues } from './exercise.model';
 import { UIService } from '../shared/ui.service';
 import * as fromTraining from './training.reducer';
-import * as Training from './training.actions';
 import { startLoading, stopLoading } from '../shared/ui.actions';
+import { setAvailableTrainings, startTraining, stopTraining, setFinishedTrainings } from './training.actions';
 
 const AVAILABLE_EXERCISES_COLLECTION = 'availableExercises';
 const FINISHED_EXERCISES_COLLECTION = 'finishedExercises';
@@ -36,7 +36,7 @@ export class TrainingService {
           })
           // subscription managed by framework, no need to unsubscribe
         ).subscribe((exercises: Exercise[]) => {
-          this.store.dispatch(new Training.SetAvailableTrainings(exercises));
+          this.store.dispatch(setAvailableTrainings({ payload: exercises }));
           this.store.dispatch(stopLoading());
         }, error => {
           this.uiService.showSnackbar('Fetching Exercises failed, please try again later', null, 3000);
@@ -48,7 +48,7 @@ export class TrainingService {
 
   startExercise(selectedId: string) {
     this.db.doc(AVAILABLE_EXERCISES_COLLECTION + '/' + selectedId).update({ lastSelected: new Date() });
-    this.store.dispatch(new Training.StartTraining(selectedId));
+    this.store.dispatch(startTraining({ payload: selectedId }));
   }
 
   completeExercise() {
@@ -58,7 +58,7 @@ export class TrainingService {
         date: new Date(),
         state: 'completed'
       });
-      this.store.dispatch(new Training.StopTraining());
+      this.store.dispatch(stopTraining());
     });
   }
 
@@ -75,7 +75,7 @@ export class TrainingService {
         date: new Date(),
         state: 'cancelled'
       });
-      this.store.dispatch(new Training.StopTraining());
+      this.store.dispatch(stopTraining());
     });
   }
 
@@ -84,7 +84,7 @@ export class TrainingService {
       this.db.collection(FINISHED_EXERCISES_COLLECTION)
         .valueChanges()
         .subscribe((exercises: Exercise[]) => {
-          this.store.dispatch(new Training.SetFinishedTrainings(exercises));
+          this.store.dispatch(setFinishedTrainings({ payload: exercises }));
         }, error => {
           console.error(error);
         })

@@ -1,8 +1,9 @@
-import { TrainingActions, SET_AVAILABLE_TRAININGS, SET_FINISHED_TRAININGS, START_TRAINING, STOP_TRAINING } from './training.actions';
-import { Exercise } from './exercise.model';
+import { createFeatureSelector, createSelector, createReducer, on, Action } from '@ngrx/store';
+
 // for module lazy loading
 import * as fromRoot from '../app.reducer';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Exercise } from './exercise.model';
+import { setAvailableTrainings, setFinishedTrainings, startTraining, stopTraining } from './training.actions';
 
 export interface TrainingState {
   availableExercises: Exercise[];
@@ -20,34 +21,21 @@ const initialState: TrainingState = {
   activeTraining: null
 };
 
-export function trainingReducer(state = initialState, action: TrainingActions) {
-  switch (action.type) {
-    case SET_AVAILABLE_TRAININGS:
-      return {
-        ...state,
-        availableExercises: action.payload
-      };
-    case SET_FINISHED_TRAININGS:
-      return {
-        ...state,
-        finishedExercises: action.payload
-      };
-    case START_TRAINING:
-      return {
-        ...state,
-        activeTraining: {
-          ...state.availableExercises
-            .find(ex => ex.id === action.payload)
-        }
-      };
-    case STOP_TRAINING:
-      return {
-        ...state,
-        activeTraining: null
-      };
-    default:
-      return state;
-  }
+const reducer = createReducer(initialState,
+  on(setAvailableTrainings, (state, { payload }) => ({ ...state, availableExercises: payload })),
+  on(setFinishedTrainings, (state, { payload }) => ({ ...state, finishedExercises: payload })),
+  on(startTraining, (state, { payload }) => ({
+    ...state, activeTraining: {
+      ...state.availableExercises
+        .find(ex => ex.id === payload)
+    }
+  })),
+  on(stopTraining, state => ({ ...state, activeTraining: null }))
+);
+
+// The exported reducer function is necessary as function calls are not supported by the AOT compiler.
+export function trainingReducer(state: TrainingState | undefined, action: Action) {
+  return reducer(state, action);
 }
 
 export const getTrainingStore = createFeatureSelector<TrainingState>('training');
@@ -56,5 +44,4 @@ export const getAvailableExercises = createSelector(getTrainingStore, (state: Tr
 export const getFinishedExercises = createSelector(getTrainingStore, (state: TrainingState) => state.finishedExercises);
 export const getActiveTraining = createSelector(getTrainingStore, (state: TrainingState) => state.activeTraining);
 export const getIsActiveTraining = createSelector(getTrainingStore, (state: TrainingState) => state.activeTraining != null);
-
 
