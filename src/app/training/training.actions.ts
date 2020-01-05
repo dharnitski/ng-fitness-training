@@ -3,11 +3,11 @@ import { Exercise } from './exercise.model';
 
 export const setAvailableTrainings = createAction(
   '[Training] Set Available Trainings',
-  props<{ payload: Exercise[] }>());
+  props<{ availableExercises: Exercise[] }>());
 export const setFinishedTrainings = createAction(
   '[Training] Set Finished Trainings',
-  props<{ payload: Exercise[] }>());
+  props<{ finishedExercises: Exercise[] }>());
 export const startTraining = createAction(
   '[Training] Start Training',
-  props<{ payload: string }>());
+  props<{ exerciseId: string }>());
 export const stopTraining = createAction('[Training] Stop Training');

@@ -36,7 +36,7 @@ export class TrainingService {
           })
           // subscription managed by framework, no need to unsubscribe
         ).subscribe((exercises: Exercise[]) => {
-          this.store.dispatch(setAvailableTrainings({ payload: exercises }));
+          this.store.dispatch(setAvailableTrainings({ availableExercises: exercises }));
           this.store.dispatch(stopLoading());
         }, error => {
           this.uiService.showSnackbar('Fetching Exercises failed, please try again later', null, 3000);
@@ -48,7 +48,7 @@ export class TrainingService {
 
   startExercise(selectedId: string) {
     this.db.doc(AVAILABLE_EXERCISES_COLLECTION + '/' + selectedId).update({ lastSelected: new Date() });
-    this.store.dispatch(startTraining({ payload: selectedId }));
+    this.store.dispatch(startTraining({ exerciseId: selectedId }));
   }
 
   completeExercise() {
@@ -84,7 +84,7 @@ export class TrainingService {
       this.db.collection(FINISHED_EXERCISES_COLLECTION)
         .valueChanges()
         .subscribe((exercises: Exercise[]) => {
-          this.store.dispatch(setFinishedTrainings({ payload: exercises }));
+          this.store.dispatch(setFinishedTrainings({ finishedExercises: exercises }));
         }, error => {
           console.error(error);
         })

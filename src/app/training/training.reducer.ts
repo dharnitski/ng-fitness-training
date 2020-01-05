@@ -22,12 +22,12 @@ const initialState: TrainingState = {
 };
 
 const reducer = createReducer(initialState,
-  on(setAvailableTrainings, (state, { payload }) => ({ ...state, availableExercises: payload })),
-  on(setFinishedTrainings, (state, { payload }) => ({ ...state, finishedExercises: payload })),
-  on(startTraining, (state, { payload }) => ({
+  on(setAvailableTrainings, (state, { availableExercises }) => ({ ...state, availableExercises })),
+  on(setFinishedTrainings, (state, { finishedExercises }) => ({ ...state, finishedExercises })),
+  on(startTraining, (state, { exerciseId }) => ({
     ...state, activeTraining: {
       ...state.availableExercises
-        .find(ex => ex.id === payload)
+        .find(ex => ex.id === exerciseId)
     }
   })),
   on(stopTraining, state => ({ ...state, activeTraining: null }))
