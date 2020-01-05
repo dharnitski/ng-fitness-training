@@ -7,12 +7,11 @@ import { TrainingService } from '../training/training.service';
 import { UIService } from '../shared/ui.service';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
-import * as Auth from '../auth/auth.actions';
 import { AuthData } from './auth-data.model';
+import { setAuthenticated, setUnauthenticated } from '../auth/auth.actions';
 
 @Injectable()
 export class AuthService {
-  private isAuthenticated = false;
 
   constructor(
     private router: Router,
@@ -24,21 +23,17 @@ export class AuthService {
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.isAuthenticated = true;
-        this.store.dispatch(new Auth.SetAuthenticated());
+        this.store.dispatch(setAuthenticated());
         this.router.navigate(['/training']);
       } else {
         this.trainingService.cancelFBSubscriptions();
-        // save state
-        this.isAuthenticated = false;
         // notify app
-        this.store.dispatch(new Auth.SetAuthenticated());
+        this.store.dispatch(setUnauthenticated());
         // redirect user
         this.router.navigate(['/login']);
       }
     });
   }
-
 
   registerUser(authData: AuthData) {
     this.store.dispatch(new UI.StartLoading());
@@ -70,11 +65,6 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
-    this.store.dispatch(new Auth.SetUnauthenticated());
   }
 
-  // todo: remove
-  isAuth() {
-    return this.isAuthenticated;
-  }
 }
